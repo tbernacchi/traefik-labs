@@ -1,9 +1,17 @@
-```openssl genrsa -out ca.key 4096```
+# SSL Certificate Generation
 
-```openssl req -x509 -new -nodes -key ca.key -sha256 -days 1024 -out ca.crt   -subj "/C=BR/ST=SP/L=Sao Paulo/O=MyKubernetes/CN=MyKubernetes CA"```
+```bash
+# Generate CA private key
+openssl genrsa -out ca.key 4096
 
-```openssl genrsa -out tls.key 2048```
- 
+# Generate CA certificate
+openssl req -x509 -new -nodes -key ca.key -sha256 -days 1024 -out ca.crt \
+  -subj "/C=BR/ST=SP/L=Sao Paulo/O=MyKubernetes/CN=MyKubernetes CA"
+
+# Generate certificate private key
+openssl genrsa -out tls.key 2048
+
+# Create OpenSSL configuration file
 cat > traefik.conf <<EOF
 [req]
 req_extensions = v3_req
@@ -20,8 +28,21 @@ subjectAltName = @alt_names
 DNS.1 = traefik.mykubernetes.com
 EOF
 
-```openssl req -new -key tls.key -out tls.csr   -subj "/C=BR/ST=SP/L=Sao Paulo/O=MyKubernetes/CN=traefik.mykubernetes.com"   -config traefik.conf```
+# Generate certificate signing request (CSR)
+openssl req -new -key tls.key -out tls.csr \
+  -subj "/C=BR/ST=SP/L=Sao Paulo/O=MyKubernetes/CN=traefik.mykubernetes.com" \
+  -config traefik.conf
 
-```openssl x509 -req -in tls.csr   -CA ca.crt -CAkey ca.key -CAcreateserial   -out tls.crt -days 365 -sha256   -extensions v3_req -extfile traefik.conf```
+# Sign the certificate with our CA
+openssl x509 -req -in tls.csr \
+  -CA ca.crt -CAkey ca.key -CAcreateserial \
+  -out tls.crt -days 365 -sha256 \
+  -extensions v3_req -extfile traefik.conf
 
-```kubectl create secret tls traefik-dashboard-cert   --cert=tls.crt   --key=tls.key   -n traefik-v2   --dry-run=client -o yaml | kubectl apply -f -```
+# Create Kubernetes TLS secret
+kubectl create secret tls traefik-dashboard-cert \
+  --cert=tls.crt \
+  --key=tls.key \
+  -n traefik-v2 \
+  --dry-run=client -o yaml | kubectl apply -f -
+```
