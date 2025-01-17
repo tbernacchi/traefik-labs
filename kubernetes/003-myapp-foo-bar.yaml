@@ -16,18 +16,22 @@ spec:
       labels:
         app: traefik-foo-bar
     spec:
+      securityContext:
+        fsGroup: 101
+        runAsUser: 100
+        runAsGroup: 101
       containers:
-      - image: ambrosiaaaaa/traefik-foo-bar:v0.0.1
+      - image: ambrosiaaaaa/traefik-foo-bar:v0.0.2
         name: traefik-foo-bar
         ports:
-        - containerPort: 443
+        - containerPort: 80
         volumeMounts:
         - name: cert-volume
           mountPath: /cert 
       volumes:
       - name: cert-volume
         persistentVolumeClaim:
-          claimName: certificates-pvc
+          claimName: certs
 ---
 apiVersion: v1
 kind: Service
@@ -38,7 +42,7 @@ spec:
   ports:
   - name: traefik-foo-bar
     port: 443
-    targetPort: 443
+    targetPort: 80
   selector:
     app: traefik-foo-bar
 ---
@@ -53,6 +57,16 @@ spec:
       - /myapp
 ---
 apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: secure-transport
+  namespace: traefik-v2
+spec:
+  serverName: traefik.mykubernetes.com
+  rootCAsSecrets:
+  - traefik-cert
+---
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: traefik-foo-bar
@@ -62,11 +76,12 @@ spec:
     - websecure
   routes:
   - kind: Rule
-    match: Host(`traefik.mykubernetes.com`) && (PathPrefix(`/myapp`) 
+    match: Host(`traefik.mykubernetes.com`) && PathPrefix(`/myapp`) 
     kind: Rule
     services:
     - name: traefik-foo-bar
-      port: 80
+      port: 443
+      serversTransport: secure-transport
     middlewares:
     - name: strip-myapp-prefix
   tls:
