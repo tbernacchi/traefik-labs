@@ -57,6 +57,15 @@ spec:
       - /myapp
 ---
 apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: test-auth
+  namespace: traefik-v2
+spec:
+  basicAuth:
+    secret: basic-auth-secret
+---
+apiVersion: traefik.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: secure-transport
@@ -84,5 +93,6 @@ spec:
       serversTransport: secure-transport
     middlewares:
     - name: strip-myapp-prefix
+    - name: test-auth
   tls:
     secretName: traefik-foo-bar-cert
