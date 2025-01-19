@@ -5,30 +5,31 @@ ports:
     port: 443
     tls:
       enabled: true
-      options: "default"
+      options: default
 
 dashboard:
   enabled: true
   domain: "traefik.mykubernetes.com"
 
+metrics:
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      namespace: monitoring
+      additionalLabels:
+        release: prometheus
+
 additionalArguments:
   - "--api.dashboard=true"
   - "--api.insecure=false"
-  - "--entrypoints.web.http.redirections.entryPoint.to=websecure"  #new way of redirect.
+  - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
   - "--log.level=DEBUG"
-
-  # Disable HSTS
-  - "--entrypoints.websecure.http.tls.options.default.minVersion=VersionTLS12"
-  - "--entrypoints.websecure.http.tls.options.default.maxVersion=VersionTLS13"
-
-  # TLS e SNI configs
-  - "--entrypoints.websecure.http.tls=true"
-  - "--entrypoints.websecure.http.tls.options.default.sniStrict=false"
-  - "--entrypoints.websecure.http.tls.options.default.minVersion=VersionTLS12"
-  - "--entrypoints.websecure.http.tls.options.default.maxVersion=VersionTLS13"
+  - "--metrics.prometheus=true"
+  - "--metrics.prometheus.addEntryPointsLabels=true"
+  - "--metrics.prometheus.addServicesLabels=true"
   - "--serversTransport.insecureSkipVerify=true"
 
-# Adicionar essa seção
 globalArguments:
   - "--global.checknewversion=false"
   - "--global.sendanonymoususage=false"
