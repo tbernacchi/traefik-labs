@@ -23,6 +23,10 @@ metrics:
     serviceMonitor:
       enabled: true
 
+logs:
+  access:
+    enabled: true
+
 providers:
   kubernetesCRD:
     enabled: true
