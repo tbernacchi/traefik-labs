@@ -49,7 +49,6 @@ kubectl create secret tls traefik-dashboard-cert \
 
 * Copy `tls.crt` and `tls.key` to `/data/certificados`. (This is the directory where we're going to mount on `PVC`)
 
-i.e:
 ```bash
 cp tls.crt /data/certificados/cert.pem
 cp tls.key /data/certificados/key.pem
