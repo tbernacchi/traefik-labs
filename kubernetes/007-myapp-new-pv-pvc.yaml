@@ -19,7 +19,7 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - raspberrypi4-5 
+          - raspberrypi4-5  # You can change this to your node name.
   storageClassName: local-certificados
 ---
 apiVersion: v1

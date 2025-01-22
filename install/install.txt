@@ -1,1 +1,0 @@
-# helm install traefik traefik/traefik --namespace traefik-v2 --values traefik-values.yaml
