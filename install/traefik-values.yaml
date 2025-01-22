@@ -43,6 +43,9 @@ additionalArguments:
   - "--metrics.prometheus.addServicesLabels=true"
   - "--entryPoints.metrics.address=:8899"
   - "--metrics.prometheus.entryPoint=metrics"
+  - "--tracing.otlp=true"
+  - "--tracing.otlp.http=true"
+  - "--tracing.otlp.http.endpoint=http://jaeger-collector.observability.svc:4318/v1/traces"
 
 globalArguments:
   - "--global.checknewversion=false"
