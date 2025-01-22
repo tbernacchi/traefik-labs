@@ -8,21 +8,21 @@
 
 ## Usage
 
-1. Build the the app `foobar-api` and push to a registry. 
-2. Generates the certificates following the `certs` directory instructions.
-3. Install Traefik, following the `README.md` in the `install` directory.
-4. Deploy the kubernetes resources, following the README.md in the `kubernetes` directory.
-5. Deploy the prometheus, following the `prometheus` directory instructions.
-6. Install `jaeger` following the `jaeger` directory instructions.
+1. Build the the app and push to a registry (`foobar-api` directory);
+2. Generates the certificates following `certs` directory instructions;
+3. Install Traefik (`install` directory);
+4. Deploy the kubernetes resources (`kubernetes` directory);
+5. Deploy Prometheus (`prometheus` directory);
+6. Install `jaeger` (`jaeger` directory).
 
-If everything is ok, you should be able to access the `traefik-dashboard` using the `https://traefik.mykubernetes.com/dashboard`;
+If everything is ok, you should be able to access the `traefik-dashboard` using the [https://traefik.mykubernetes.com/dashboard](https://traefik.mykubernetes.com/dashboard)
 
-# Testing 
+## Testing
 
 You can test your app using the following command:
 
 ```
-curl -k -u user1:secure_password https://traefik.mykubernetes.com/myapp/
+curl -k -u user1:secure_password https://traefik.mykubernetes.com/myapp/health/
 IP: 127.0.0.1
 IP: ::1
 IP: 10.42.2.30
@@ -43,5 +43,3 @@ X-Forwarded-Proto: https
 X-Forwarded-Server: traefik-69cfd56b47-nh6jb
 X-Real-Ip: 192.168.1.100
 ```
-
-
