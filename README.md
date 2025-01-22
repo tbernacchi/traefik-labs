@@ -15,8 +15,7 @@
 5. Deploy Prometheus (prometheus directory);
 6. Install jaeger (jaeger directory).
 
-If everything is ok, you should be able to access the `traefik-dashboard` here:
-[https://traefik.mykubernetes.com/dashboard](https://traefik.mykubernetes.com/dashboard)
+You should be able to access the traefik dashboard here: [https://traefik.mykubernetes.com/dashboard](https://traefik.mykubernetes.com/dashboard)
 
 ## Testing
 
@@ -45,7 +44,7 @@ X-Forwarded-Server: traefik-69cfd56b47-nh6jb
 X-Real-Ip: 192.168.1.100
 ```
 
-# References:
+## References:
 https://doc.traefik.io/traefik/getting-started/install-traefik/#use-the-helm-chart
 https://doc.traefik.io/traefik/operations/dashboard/
 https://doc.traefik.io/traefik/middlewares/overview/
