@@ -47,6 +47,12 @@ kubectl create secret tls traefik-dashboard-cert \
   --dry-run=client -o yaml | kubectl apply -f -
 ```
 
+Add your `ca.crt` to the system keychain. If you are using macOS:
+
+```bash
+sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" ca.crt
+```  
+
 * Copy `tls.crt` and `tls.key` to `/data/certificados`. (This is the directory where we're going to mount on `PVC`)
 
 ```bash

@@ -30,5 +30,6 @@ kubectl create -f 003-myapp-foo-bar.yaml
 ```
 kubectl create -f 006-myapp-metrics.yaml
 ```
+* To setup the metrics, you need to setup prometheus (See `prometheus` directory).
 
 * Create basic auth for the myapp. See `users` directory.
