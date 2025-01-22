@@ -1,10 +1,9 @@
 # traefik-labs
-Traefik labs study case.
 
 > This project is a study case for the Traefik labs.
 
 <div align=>
-	<img align="center"  width="300px" src=/.github/assets/img/traefik-logo.png>
+	<img align="center"  src=/.github/assets/img/traefik-logo.png>
 </div> 
 
 ## Usage
