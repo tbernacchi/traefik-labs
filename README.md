@@ -45,18 +45,18 @@ X-Real-Ip: 192.168.1.100
 ```
 
 ## References:
-https://doc.traefik.io/traefik/getting-started/install-traefik/#use-the-helm-chart
-https://doc.traefik.io/traefik/operations/dashboard/
-https://doc.traefik.io/traefik/middlewares/overview/
-https://doc.traefik.io/traefik-hub/api-gateway/reference/routing/kubernetes/http/services/ref-serverstransport
-https://doc.traefik.io/traefik/middlewares/http/basicauth/
-https://doc.traefik.io/traefik/observability/metrics/prometheus/
-https://doc.traefik.io/traefik/v2.11/observability/metrics/prometheus/#entrypoint
-https://traefik.io/blog/capture-traefik-metrics-for-apps-on-kubernetes-with-prometheus/
-https://community.traefik.io/t/capture-traefik-metrics-for-apps-on-kubernetes-with-prometheus/9811
-https://www.reddit.com/r/PrometheusMonitoring/comments/122q8lf/collecting_traefik_metrics/
-https://doc.traefik.io/traefik/observability/logs/
-https://doc.traefik.io/traefik/observability/access-logs/
-https://community.traefik.io/t/add-host-to-access-logs/22343
-https://doc.traefik.io/traefik/observability/tracing/opentelemetry/
-https://traefik.io/blog/distributed-tracing-with-traefik-and-jaeger-on-kubernetes/
+- https://doc.traefik.io/traefik/getting-started/install-traefik/#use-the-helm-chart
+- https://doc.traefik.io/traefik/operations/dashboard/
+- https://doc.traefik.io/traefik/middlewares/overview/
+- https://doc.traefik.io/traefik-hub/api-gateway/reference/routing/kubernetes/http/services/ref-serverstransport
+- https://doc.traefik.io/traefik/middlewares/http/basicauth/
+- https://doc.traefik.io/traefik/observability/metrics/prometheus/
+- https://doc.traefik.io/traefik/v2.11/observability/metrics/prometheus/#entrypoint
+- https://traefik.io/blog/capture-traefik-metrics-for-apps-on-kubernetes-with-prometheus/
+- https://community.traefik.io/t/capture-traefik-metrics-for-apps-on-kubernetes-with-prometheus/9811
+- https://www.reddit.com/r/PrometheusMonitoring/comments/122q8lf/collecting_traefik_metrics/
+- https://doc.traefik.io/traefik/observability/logs/
+- https://doc.traefik.io/traefik/observability/access-logs/
+- https://community.traefik.io/t/add-host-to-access-logs/22343
+- https://doc.traefik.io/traefik/observability/tracing/opentelemetry/
+- https://traefik.io/blog/distributed-tracing-with-traefik-and-jaeger-on-kubernetes/
