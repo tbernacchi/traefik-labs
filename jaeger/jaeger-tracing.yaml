@@ -1,0 +1,20 @@
+---
+apiVersion: jaegertracing.io/v1
+kind: Jaeger
+metadata:
+  name: jaeger
+  namespace: observability
+spec:
+  strategy: allInOne    # Modo mais simples
+  allInOne:
+    options:
+      query:
+        base-path: /jaeger
+      log-level: debug
+  storage:
+    type: memory
+  ingress:
+    enabled: true
+    hosts:
+      - traefik.mykubernetes.com
+
