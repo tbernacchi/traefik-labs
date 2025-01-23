@@ -114,7 +114,7 @@ metadata:
   namespace: traefik-v2
 spec:
   basicAuth:
-    secret: basic-auth-secret
+    secret: basic-auth-secret # See kubernetes/users/README.md
 ---
 apiVersion: traefik.io/v1alpha1
 kind: ServersTransport
@@ -124,7 +124,7 @@ metadata:
 spec:
   serverName: traefik.mykubernetes.com
   rootCAsSecrets:
-  - traefik-cert
+  - traefik-cert  # 005-myapp-secret.yaml
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
@@ -146,4 +146,4 @@ spec:
     - name: strip-myapp-prefix
     - name: test-auth
   tls:
-    secretName: traefik-foo-bar-cert
+    secretName: traefik-foo-bar-cert # See certs/README.md

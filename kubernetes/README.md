@@ -17,10 +17,8 @@ kubectl create -f 001-traefik-dashboard.yaml
 #Deploy myapp
 kubectl create -f 003-myapp-foo-bar.yaml
 
-# Deploy the ingress-route metrics for myapp (Prometheus)
+# Deploy the ingress-route metrics for myapp (Enable Prometheus first - See `prometheus` directory)
 kubectl create -f 006-myapp-metrics.yaml
 ```
 
-* To setup metrics, you need to setup prometheus (See `prometheus` directory).
 * Create basic auth for the myapp. See `users` directory.
-
