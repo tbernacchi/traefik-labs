@@ -26,7 +26,7 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: cert-volume
+        - name: certificados
           mountPath: /cert 
         readinessProbe:
           httpGet:
@@ -54,9 +54,9 @@ spec:
             cpu: "200m"
             memory: "256Mi"
       volumes:
-      - name: cert-volume
+      - name: certificados
         persistentVolumeClaim:
-          claimName: certs
+          claimName: certificados
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -136,8 +136,15 @@ spec:
     - websecure
   routes:
   - kind: Rule
-    match: Host(`traefik.mykubernetes.com`) && PathPrefix(`/myapp`) 
-    kind: Rule
+    match: |
+      Host(`traefik.mykubernetes.com`) &&
+      PathPrefix(`/myapp`) &&
+      (Path(`/myapp`) || Path(`/myapp/`) ||
+      Path(`/myapp/data`) || Path(`/myapp/data/`) ||
+      Path(`/myapp/echo`) || Path(`/myapp/echo/`) ||
+      Path(`/myapp/bench`) || Path(`/myapp/bench/`) ||
+      Path(`/myapp/api`) || Path(`/myapp/api/`) ||
+      Path(`/myapp/health`) || Path(`/myapp/health/`))
     services:
     - name: traefik-foo-bar
       port: 443
