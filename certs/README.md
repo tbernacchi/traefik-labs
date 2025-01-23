@@ -39,12 +39,16 @@ openssl x509 -req -in tls.csr \
   -out tls.crt -days 365 -sha256 \
   -extensions v3_req -extfile traefik.conf
 
-# Create Kubernetes TLS secret
+# Create Kubernetes TLS secrets
 kubectl create secret tls traefik-dashboard-cert \
   --cert=tls.crt \
   --key=tls.key \
   -n traefik-v2 \
   --dry-run=client -o yaml | kubectl apply -f -
+
+kubectl get secret traefik-dashboard-cert -n traefik-v2 -o yaml | \
+  sed 's/name: traefik-dashboard-cert/name: traefik-foo-bar-cert/' | \
+  kubectl apply -f -
 ```
 
 Add your `ca.crt` to the system keychain. If you are using macOS:
