@@ -34,7 +34,7 @@ jobs:
     - name: Build for arm64
       env:
         GOARCH: arm64
-      run: go build -v
+      run: go build -v .
 
     - name: Test
       run: go test -v ./...
