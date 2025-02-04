@@ -5,24 +5,40 @@ name: Go
 
 on:
   push:
-    branches: [ "main" ]
+    paths:
+      - 'foobar-api/**'
   pull_request:
-    branches: [ "main" ]
+    paths:
+      - 'foobar-api/**'
 
 jobs:
-
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: foobar-api
+
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Set up Go
-      uses: actions/setup-go@v4
+      uses: actions/setup-go@v3
       with:
-        go-version: '1.22'
+        go-version: '1.16'
+
+    - name: Initialize Go module
+      working-directory: foobar-api
+      run: |
+        if [ ! -f go.mod ]; then
+          go mod init foobar-api
+        fi
+        go mod tidy
 
     - name: Build
+      working-directory: foobar-api
       run: go build -v ./...
 
     - name: Test
+      working-directory: foobar-api
       run: go test -v ./...
