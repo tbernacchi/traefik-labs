@@ -13,7 +13,7 @@ Tiny Go webserver that prints os information and HTTP request to output
 traefik-labs|main⚡ ⇒ k create -f foobar-api/argo-workflows/
 ```
 
-* Don't forget to create the secret and the service account.
+Create the secret and the service account.
 
 ```bash
 kubectl create secret generic docker-credentials \
@@ -24,7 +24,7 @@ kubectl create secret generic docker-credentials \
 kubectl create serviceaccount foobar -n foobar
 ```
 
-Submitting the workflow:
+Submitting the workflow using [argo-cli](https://argo-workflows.readthedocs.io/en/latest/walk-through/argo-cli/).
 
 ```bash
 argo submit --from workflowtemplate/foobar-api -p repo="git@github.com:tbernacchi/traefik-labs.git" \
@@ -38,4 +38,10 @@ argo submit --from workflowtemplate/foobar-api -p repo="git@github.com:tbernacch
 
 ```bash
 argo get <name> -n foobar
+```
+
+To check the steps:
+
+```bash
+argo watch <name>-n foobar
 ```
