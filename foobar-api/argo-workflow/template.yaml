@@ -164,6 +164,3 @@ spec:
         volumeMounts:
           - name: workdir
             mountPath: /workdir
-
-
-

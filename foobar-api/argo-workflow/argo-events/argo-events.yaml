@@ -1,0 +1,48 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: github
+  namespace: argo-events
+spec:
+  github:
+    foobar-api:
+      repositories:
+        - owner: tbernacchi
+          names:
+            - foobar-api
+      webhook:
+        endpoint: /push
+        port: "12000"
+      events:
+        - push
+      insecure: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: github-sensor
+  namespace: argo-events
+spec:
+  dependencies:
+    - name: github-push
+      eventSourceName: github
+      eventName: foobar-repo
+  triggers:
+    - template:
+        name: argo-workflow-trigger
+        argoWorkflow:
+          operation: submit
+          source:
+            apiVersion: argoproj.io/v1alpha1
+            kind: Workflow
+            metadata:
+              generateName: foobar-api-
+              namespace: foobar
+            spec:
+              workflowTemplateRef:
+                name: foobar-api
+              arguments:
+                parameters:
+                  - name: oci-tag
+                    value: "{{ event.body.head_commit.id }}"

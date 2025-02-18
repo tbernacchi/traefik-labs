@@ -1,0 +1,20 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: webhook-workflow-
+  namespace: argo
+spec:
+  entrypoint: whalesay
+  templates:
+    - name: whalesay
+      inputs:
+        parameters:
+        - name: message
+      container:
+        name: "busybox"  # Certifique-se de que este é o nome correto do container
+        image: busybox
+        command: ["/bin/sh", "-c"] 
+        args:
+          - "echo '{{inputs.parameters.message}}'" 
+
