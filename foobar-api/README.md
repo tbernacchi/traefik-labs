@@ -45,3 +45,7 @@ To check the steps:
 ```bash
 argo watch <name>-n foobar
 ```
+## argo-events
+
+Testing the eventsource `push` event into the repository. 
+
