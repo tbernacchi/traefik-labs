@@ -9,8 +9,25 @@ spec:
     ports:
       - port: 12000
         targetPort: 12000
-  webhook:
+  github:
     foobar-api:
-      port: "12000"
-      endpoint: "/foobar-webhook"
-      method: POST
+      repositories:
+        - owner: tbernacchi
+          names:
+            - traefik-labs
+      webhook:
+        endpoint: "/foobar-webhook"
+        port: "12000"
+        method: POST
+      events:
+        - push
+      branches:
+        - "main"
+      paths:
+        - "foobar-api/**"
+      apiToken:
+        name: github-access
+        key: token
+      webhookSecret:
+        name: github-webhook-secret
+        key: token
