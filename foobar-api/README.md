@@ -47,5 +47,5 @@ argo watch <name>-n foobar
 ```
 ## argo-events
 
-Test 4: Testing GitHub webhook after configuration
+Test 5: Testing GitHub webhook after configuration
 
