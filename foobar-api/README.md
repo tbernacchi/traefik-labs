@@ -24,7 +24,7 @@ kubectl create secret generic docker-credentials \
 kubectl create serviceaccount foobar -n foobar
 ```
 
-Submitting the workflow using [argo-cli](https://argo-workflows.readthedocs.io/en/latest/walk-through/argo-cli/):
+Submitting the workflow manually using [argo-cli](https://argo-workflows.readthedocs.io/en/latest/walk-through/argo-cli/):
 
 ```bash
 argo submit --from workflowtemplate/foobar-api -p repo="git@github.com:tbernacchi/traefik-labs.git" \
