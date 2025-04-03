@@ -47,5 +47,5 @@ argo watch <name>-n foobar
 ```
 ## argo-events
 
-Testing the eventsource `push` event into the repository. 
+Test 2: Testing GitHub webhook after configuration
 
