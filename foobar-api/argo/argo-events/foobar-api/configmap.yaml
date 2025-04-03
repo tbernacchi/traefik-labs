@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: foobar-version
+  namespace: foobar
+  labels:
+    workflows.argoproj.io/configmap-type: Parameter  # Add label
+data:
+  version: "v0.0.4"  # versioning 

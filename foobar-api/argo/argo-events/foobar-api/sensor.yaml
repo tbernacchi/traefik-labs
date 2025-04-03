@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: foobar-webhook
+  namespace: foobar
+spec:
+  template:
+    serviceAccountName: foobar
+  dependencies:
+    - name: foobar-dep
+      eventSourceName: foobar-webhook
+      eventName: foobar-api
+  triggers:
+    - name: webhook-workflow-trigger
+      template:
+        name: foobar-workflow-trigger
+        argoWorkflow:
+          group: argoproj.io
+          version: v1alpha1
+          resource: workflows
+          operation: submit
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: foobar-api-
+                namespace: foobar
+              spec:
+                workflowTemplateRef:
+                  name: foobar-api
+                arguments:
+                  parameters:
+                    - name: repo
+                      value: https://github.com/tbernacchi/traefik-labs.git
+                    - name: revision
+                      value: main
+                    - name: dockerfile-path
+                      value: foobar-api
+                    - name: oci-image
+                      value: ambrosiaaaaa/traefik-foo-bar
+                    - name: oci-registry
+                      value: docker.io
+                    - name: push-image
+                      value: "true"
+                    - name: oci-tag
+                      valueFrom:
+                        configMapKeyRef:
+                          name: foobar-version
+                          key: version
