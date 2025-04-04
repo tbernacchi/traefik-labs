@@ -45,7 +45,5 @@ To check the steps:
 ```bash
 argo watch <name>-n foobar
 ```
-## argo-events
 
-Test 6: Testing GitHub webhook after configuration
-
+## Test: Fri  4 Apr 2025 14:04:55 -03
