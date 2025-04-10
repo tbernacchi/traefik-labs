@@ -1,0 +1,76 @@
+name: Build and push container image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  IMAGE_NAME: foobar-api
+  IMAGE_TAG: v0.0.3
+  REGISTRY_USER: ambrosiaaaa
+  REGISTRY: docker.io
+
+jobs:
+  test:
+    runs-on: [my-runner-foobar]
+
+    defaults:
+      run:
+        working-directory: ./foobar-api
+
+    steps:
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Setup Go
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22' 
+
+      # Cache Go modules
+      - name: Cache Go modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      # Install dependencies
+      - name: Install dependencies
+        run: go mod download
+    
+      # Check and run tests
+      - name: Check and run tests
+        run: |
+          TEST_FILES=$(find . -name "*_test.go")
+          if [ -z "$TEST_FILES" ]; then
+             echo "Erro: Nenhum arquivo de teste encontrado!"
+             exit 1
+          fi
+          go test ./... -v
+
+  build-and-push-with-kaniko:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Kaniko to build and push the image
+      - name: Build and push with Kaniko
+        uses: aevea/kaniko-action@v1.1.0
+        with:
+          image: ${{ env.REGISTRY }}/${{ env.REGISTRY_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          cache: true
+          cache-repository: ${{ env.REGISTRY }}/${{ env.REGISTRY_USER }}/${{ env.IMAGE_NAME }}-cache
+          executor: gcr.io/kaniko-project/executor:latest
