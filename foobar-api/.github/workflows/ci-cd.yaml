@@ -18,9 +18,18 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./foobar-api
+        working-directory: foobar-api
 
     steps:
+
+      # Debug
+      - name: Print working directory
+        run: pwd
+        
+      # List files
+      - name: List files
+        run: ls -la
+
       # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
