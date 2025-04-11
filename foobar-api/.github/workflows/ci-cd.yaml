@@ -1,4 +1,4 @@
-name: Build and push container image
+name: Build and push foobar-api container image
 
 on:
   push:
@@ -21,17 +21,45 @@ jobs:
         working-directory: foobar-api
 
     steps:
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       # Debug: Print working directory
       - name: Print working directory
         run: pwd
+        working-directory: foobar-api
 
       # Debug: List files
       - name: List files
         run: ls -la
+        working-directory: foobar-api
 
-      # Checkout code
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    # Debug: Check for go.mod and go.sum
+      - name: Check for go.mod and go.sum
+        run: |
+            echo "Checking for go.mod in foobar-api/"
+            if [ -f go.mod ]; then
+                echo "go.mod found"
+                cat go.mod
+            else
+              echo "go.mod NOT found in foobar-api/"
+              exit 1
+            fi
+            echo "Checking for go.sum in foobar-api/"
+            if [ -f go.sum ]; then
+              echo "go.sum found"
+              cat go.sum
+            else
+              echo "go.sum NOT found in foobar-api/"
+              exit 1
+            fi
+        working-directory: foobar-api
+
+      # Debug: List files in root directory
+      - name: List files in root directory
+        run: ls -la
+        working-directory: .
 
       # Setup Go
       - name: Set up Go
@@ -47,7 +75,6 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('foobar-api/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-        working-directory: foobar-api  # Explicitly set for cache step
 
       # Install dependencies
       - name: Install dependencies
