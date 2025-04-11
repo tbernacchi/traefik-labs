@@ -16,50 +16,10 @@ jobs:
   test:
     runs-on: [my-runner-foobar]
 
-    defaults:
-      run:
-        working-directory: foobar-api
-
     steps:
       # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      # Debug: Print working directory
-      - name: Print working directory
-        run: pwd
-        working-directory: foobar-api
-
-      # Debug: List files
-      - name: List files
-        run: ls -la
-        working-directory: foobar-api
-
-    # Debug: Check for go.mod and go.sum
-      - name: Check for go.mod and go.sum
-        run: |
-            echo "Checking for go.mod in foobar-api/"
-            if [ -f go.mod ]; then
-                echo "go.mod found"
-                cat go.mod
-            else
-              echo "go.mod NOT found in foobar-api/"
-              exit 1
-            fi
-            echo "Checking for go.sum in foobar-api/"
-            if [ -f go.sum ]; then
-              echo "go.sum found"
-              cat go.sum
-            else
-              echo "go.sum NOT found in foobar-api/"
-              exit 1
-            fi
-        working-directory: foobar-api
-
-      # Debug: List files in root directory
-      - name: List files in root directory
-        run: ls -la
-        working-directory: .
 
       # Setup Go
       - name: Set up Go
@@ -69,10 +29,15 @@ jobs:
 
       # Check and run tests
       - name: Check and run tests
+        working-directory: foobar-api
         run: |
+          if [ ! -f go.mod ] || [ ! -f go.sum ]; then
+            echo "Error: go.mod or go.sum not found!"
+            exit 1
+          fi
           TEST_FILES=$(find . -name "*_test.go")
           if [ -z "$TEST_FILES" ]; then
-             echo "Erro: Nenhum arquivo de teste encontrado!"
+             echo "Error: No test files found!"
              exit 1
           fi
           go test ./... -v
