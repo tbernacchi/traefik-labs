@@ -20,6 +20,8 @@ jobs:
       # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          path: traefik-labs
 
       # Setup Go
       - name: Set up Go
@@ -29,7 +31,7 @@ jobs:
 
       # Check and run tests
       - name: Check and run tests
-        working-directory: foobar-api
+        working-directory: traefik-labs/foobar-api
         run: |
           if [ ! -f go.mod ] || [ ! -f go.sum ]; then
             echo "Error: go.mod or go.sum not found!"
