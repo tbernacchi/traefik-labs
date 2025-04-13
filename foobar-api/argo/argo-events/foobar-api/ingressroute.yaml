@@ -9,7 +9,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`traefik.mykubernetes.com`)
+      match: (Host(`traefik.mykubernetes.com`) || Host(`100.65.62.72`) || Host(`192.168.1.130`)) && PathPrefix(`/foobar-webhook`)
       services:
         - name: foobar-webhook-eventsource-svc
           port: 12000

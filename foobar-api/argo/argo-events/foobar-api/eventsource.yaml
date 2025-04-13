@@ -13,6 +13,7 @@ spec:
     foobar-api:
       repositories:
         - owner: tbernacchi
+          repository: traefik-labs
           names:
             - traefik-labs
       webhook:
@@ -24,7 +25,7 @@ spec:
       branches:
         - "main"
       paths:
-        - "foobar-api/**"
+        - "foobar-api"
       apiToken:
         name: github-access
         key: token
