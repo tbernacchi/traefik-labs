@@ -9,7 +9,7 @@ on:
 env:
   IMAGE_NAME: foobar-api
   IMAGE_TAG: v0.0.3
-  REGISTRY_USER: ambrosiaaaa
+  REGISTRY_USER: ambrosiaaaaa
   REGISTRY: docker.io
 
 jobs:
