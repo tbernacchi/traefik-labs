@@ -62,6 +62,15 @@ jobs:
           username: ${{ env.REGISTRY_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+
+      - name: Debug credentials
+        run: |
+          echo "Registry: ${{ env.REGISTRY }}"
+          echo "Username: ${{ env.REGISTRY_USER }}"
+          echo "Token set: ${{ secrets.DOCKERHUB_TOKEN != '' }}"
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
       # Build and push
       - name: Build and push
         uses: docker/build-push-action@v4
