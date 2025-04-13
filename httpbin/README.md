@@ -35,4 +35,3 @@ curl http://localhost:8000/httpbin/get
 5. The service forwards to the pod on port 8080
 6. The application receives just /get as the path
 
-[See](https://github.com/tbernacchi/traefik-labs/tree/main/httpbin) 
