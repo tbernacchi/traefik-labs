@@ -56,7 +56,7 @@ jobs:
       - name: Read version from file
         id: version
         run: |
-          VERSION=$(cat foobar-api/version)
+          VERSION=$(cat foobar-api/VERSION)
           echo "Read version: $VERSION" # Debug
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT # Debug of the output file
