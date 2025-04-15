@@ -55,7 +55,22 @@ jobs:
 
       - name: Read version from file
         id: version
-        run: echo "VERSION=$(cat foobar-api/version)" >> $GITHUB_OUTPUT
+        run: |
+          VERSION=$(cat foobar-api/version)
+          echo "Read version: $VERSION" # Debug
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT # Debug of the output file
+
+      - name: Super Debug
+        run: |
+          echo "Conteúdo do arquivo VERSION:"
+          cat foobar-api/version
+          echo "----------------"
+          echo "Output do step anterior:"
+          echo "${{ steps.version.outputs.VERSION }}"
+          echo "----------------"
+          echo "Tag completa que será usada:"
+          echo "${{ env.REGISTRY }}/${{ env.REGISTRY_USER }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.VERSION }}"
 
       - name: Check if DOCKERHUB_TOKEN is set
         run: |
