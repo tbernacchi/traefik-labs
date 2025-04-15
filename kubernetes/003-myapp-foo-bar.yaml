@@ -21,8 +21,8 @@ spec:
         runAsUser: 100
         runAsGroup: 101
       containers:
-      - image: ambrosiaaaaa/traefik-foo-bar:v0.0.2
-        name: traefik-foo-bar
+      - image: ambrosiaaaaa/foobar-api:v0.0.3
+        name: foobar-app
         ports:
         - containerPort: 80
         volumeMounts:
