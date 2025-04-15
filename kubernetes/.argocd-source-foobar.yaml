@@ -1,0 +1,3 @@
+kustomize:
+  images:
+  - ambrosiaaaaa/foobar-api:v0.0.5
