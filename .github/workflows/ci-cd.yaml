@@ -56,7 +56,7 @@ jobs:
       - name: Read version from file
         id: version
         run: |
-          VERSION=$(cat foobar-api/VERSION)
+          VERSION=$(cat foobar-api/.version)
           echo "Read version: $VERSION" # Debug
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT # Debug of the output file
@@ -64,7 +64,7 @@ jobs:
       - name: Super Debug
         run: |
           echo "Conteúdo do arquivo VERSION:"
-          cat foobar-api/version
+          cat foobar-api/.version
           echo "----------------"
           echo "Output do step anterior:"
           echo "${{ steps.version.outputs.VERSION }}"
