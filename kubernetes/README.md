@@ -22,3 +22,33 @@ kubectl create -f 006-myapp-metrics.yaml
 ```
 
 * Create basic auth for the myapp. See `users` directory.
+
+[UPDATE VERSION](update-version.sh)
+
+I've add the `update-version.sh` script to update the version of the image in the deployment file.
+
+This script helps maintain synchronization between your Kubernetes deployment manifests and the actual image versions, whether they come from the Argo CD Image Updater or the cluster itself.
+
+## Overview
+
+The script handles two main scenarios:
+1. When Argo CD Image Updater has generated a new version of the file using git [write back](https://argocd-image-updater.readthedocs.io/en/stable/basics/update-methods/#:~:text=no%20further%20configuration.-,git%20write%2Dback%20method,%C2%B6,-Compatibility%20with%20Argo) (`.argocd-source-foobar.yaml`), it updates your deployment manifest with this version;
+2. When no Argo CD Image Updater file is found, it syncs your deployment manifest with the current version from the cluster
+
+## Prerequisites
+
+- `kubectl` configured with access to your cluster
+- `yq` installed (YAML parser)
+- `sed` (comes with most Unix-like systems)
+- Basic bash environment
+
+## Installation
+
+1. Clone this repository or copy the script to your project
+2. Make the script executable:
+
+Run the script from your project root where your Kubernetes manifests are located:
+
+```bash
+./update-version.sh
+```

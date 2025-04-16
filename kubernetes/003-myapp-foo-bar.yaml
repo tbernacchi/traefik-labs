@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: traefik-foo-bar
-  namespace: traefik-v2
+  namespace: foobar
   labels:
     app: traefik-foo-bar
 spec:
@@ -21,7 +21,7 @@ spec:
         runAsUser: 100
         runAsGroup: 101
       containers:
-      - image: ambrosiaaaaa/foobar-api:v0.0.3
+      - image: ambrosiaaaaa/foobar-api:v0.0.5
         name: foobar-app
         ports:
         - containerPort: 80
