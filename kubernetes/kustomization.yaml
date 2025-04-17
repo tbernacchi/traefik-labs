@@ -3,8 +3,10 @@ kind: Kustomization
 namespace: foobar
 
 resources:
-  - 005-myapp-secret.yaml
-  - 007-myapp-new-pv-pvc.yaml
-  - 003-myapp-foo-bar.yaml
-  - 006-myapp-metrics.yaml
+  - 002-myapp-foobar-all.yaml
+  - 003-myapp-foobar-secret.yaml
+  - 004-myapp-foobar-metrics-ingress.yaml
+  - 005-myapp-new-pv-pvc.yaml
+  - 006-myapp-foobar-netpol.yaml
+
 
