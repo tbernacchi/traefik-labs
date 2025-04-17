@@ -46,6 +46,3 @@ To check the steps:
 argo watch <name>-n foobar
 ```
 
-## Test: Fri  4 Apr 2025 14:04:55 -03
-## Test: Fri  4 Apr 2025 14:13:24 -03
-## Test: Fri  4 Apr 2025 14:19:41 -03
