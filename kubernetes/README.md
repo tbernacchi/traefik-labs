@@ -95,10 +95,3 @@ If you encounter issues:
    - Verify YAML file format
    - Ensure proper cluster access
 
-## Contributing
-
-Feel free to submit issues and enhancement requests!
-
-## License
-
-[Your License Here]
