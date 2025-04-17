@@ -9,16 +9,20 @@ kubectl apply -f 005-myapp-secret.yaml
 kubectl create secret tls traefik-dashboard-cert --cert=tls.crt --key=tls.key -n traefik-v2 --dry-run=client -o yaml | kubectl apply -f -
 
 # Create the PVC for the certificates
-kubectl create -f 007-myapp-new-pv-pvc.yaml
+kubectl create -f 005-myapp-new-pv-pvc.yaml
 
 # Create the traefik-dashboard ingress-route
-kubectl create -f 001-traefik-dashboard.yaml
+kubectl create -f 001-traefik-dash-ingress.yaml
 
-#Deploy myapp
-kubectl create -f 003-myapp-foo-bar.yaml
+# Deploy myapp and its secret
+kubectl create -f 002-myapp-foobar-all.yaml
+kubectl create -f 003-myapp-foobar-secret.yaml
 
-# Deploy the ingress-route metrics for myapp (Enable Prometheus first - See `prometheus` directory)
-kubectl create -f 006-myapp-metrics.yaml
+# Deploy the ingress-route metrics for myapp
+kubectl create -f 004-myapp-foobar-metrics-ingress.yaml
+
+# Deploy network policy
+kubectl create -f 006-myapp-foobar-netpol.yaml
 ```
 * Create basic auth for the myapp. See `users` directory.
 
