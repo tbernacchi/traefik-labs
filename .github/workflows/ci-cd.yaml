@@ -3,6 +3,8 @@ name: Build and push foobar-api container image
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - "kubernetes/.argocd-source-*.yaml"
   pull_request:
     branches: [ "main" ]
 
