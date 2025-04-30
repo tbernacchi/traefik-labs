@@ -15,10 +15,9 @@
    - ✓ Deploy new version;
    - ✓ Rollback to previous version if new version is not working;
 
+## Automatic Update Flow
 
-# Automatic Update Flow
-
-![Auto Update Flow](../../../.github/assets/img/auto-update-flow.png)
+![Auto Update Flow](../../.github/assets/img/auto-update-flow.png)
 
 ## How to update version
 
