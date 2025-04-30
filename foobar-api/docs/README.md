@@ -27,9 +27,10 @@
 4. Argo Image Updater will update manifest creating this file `.argocd-source-foobar.yaml`;
 5. To make sure we don't miss any version changes, I've created the script `update-version.sh`. See [Kubernetes Version Sync Script](../../kubernetes/README.md#kubernetes-version-sync-script).
 
-## [UPDATE] Kustomization Configuration
+## [UPDATE] Kustomization 
 
 Instead of using `.argocd-source-foobar.yaml`, we're going to manage images directly in `kustomization.yaml`.  
+
 See [kustomization.yaml](../../kubernetes/kustomization.yaml) for more details.
 
 ## Argo Image Updater Configuration
