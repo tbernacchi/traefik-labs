@@ -26,3 +26,54 @@
 3. GitHub Actions will build and push new version to Docker Hub;
 4. Argo Image Updater will update manifest creating this file `.argocd-source-foobar.yaml`;
 5. To make sure we don't miss any version changes, I've created the script `update-version.sh`. See [Kubernetes Version Sync Script](../../kubernetes/README.md#kubernetes-version-sync-script).
+
+# UPDATE
+
+## Kustomization Configuration
+Instead of using `.argocd-source-foobar.yaml`, we're going to manage images directly in `kustomization.yaml`.
+
+## Argo Image Updater Configuration
+
+```
+kubectl annotate application foobar -n argocd \
+    argocd-image-updater.argoproj.io/git-branch="main" \
+    argocd-image-updater.argoproj.io/image-list="myalias=ambrosiaaaaa/foobar-api" \
+    argocd-image-updater.argoproj.io/myalias.pull-secret="dockerhub-secret" \
+    argocd-image-updater.argoproj.io/myalias.update-strategy="semver" \
+    argocd-image-updater.argoproj.io/write-back-method="git:secret:argocd/git-creds" \
+    argocd-image-updater.argoproj.io/write-back-target="kustomization" \
+    --overwrite
+```
+
+```
+kubectl get application foobar -n argocd -o jsonpath='{.metadata.annotations}' | jq
+{
+  "argocd-image-updater.argoproj.io/git-branch": "main",
+  "argocd-image-updater.argoproj.io/image-list": "myalias=ambrosiaaaaa/foobar-api",
+  "argocd-image-updater.argoproj.io/myalias.pull-secret": "dockerhub-secret",
+  "argocd-image-updater.argoproj.io/myalias.update-strategy": "semver",
+  "argocd-image-updater.argoproj.io/write-back-method": "git:secret:argocd/git-creds",
+  "argocd-image-updater.argoproj.io/write-back-target": "kustomization"
+}
+```
+
+## Auto-sync Configuration
+
+```
+kubectl patch application foobar -n argocd --type merge -p '{"spec":{"syncPolicy":{"syncOptions":["CreateNamespace=true","PruneLast=true","Validate=false"]}}}'
+```
+
+```
+kubectl get application foobar -n argocd -o jsonpath='{.spec.syncPolicy}' | jq
+{
+  "automated": {
+    "prune": true,
+    "selfHeal": true
+  },
+  "syncOptions": [
+    "CreateNamespace=true",
+    "PruneLast=true",
+    "Validate=false"
+  ]
+}
+```
