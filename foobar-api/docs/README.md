@@ -21,4 +21,5 @@
 2. Commit and push to GitHub;
 3. GitHub Actions will build and push new version to Docker Hub;
 4. Argo Image Updater will update manifest creating this file `.argocd-source-foobar.yaml`;
-5. To make sure we don't miss any version changes, I've created the script `update-version.sh`. See [Kubernetes Version Sync Script] (..kubernetes/README.md).
+5. To make sure we don't miss any version changes, I've created the script `update-version.sh`. See [Kubernetes Version Sync Script](..kubernetes/README.md).
+
