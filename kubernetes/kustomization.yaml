@@ -9,4 +9,6 @@ resources:
   - 005-myapp-new-pv-pvc.yaml
   - 006-myapp-foobar-netpol.yaml
 
-
+images:
+  - name: ambrosiaaaaa/foobar-api
+    newTag: v0.0.6 
