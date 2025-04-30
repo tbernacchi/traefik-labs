@@ -17,7 +17,7 @@
 
 ## Automatic Update Flow
 
-![Auto Update Flow](../../.github/assets/img/auto-update-flow.png)
+![Auto Update Flow](../../.github/assets/img/gitops.png)
 
 ## How to update version
 
