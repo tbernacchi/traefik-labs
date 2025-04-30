@@ -21,7 +21,7 @@ spec:
         runAsUser: 100
         runAsGroup: 101
       containers:
-      - image: ambrosiaaaaa/foobar-api:v0.0.6
+      - image: ambrosiaaaaa/foobar-api
         name: foobar-app
         ports:
         - containerPort: 80
