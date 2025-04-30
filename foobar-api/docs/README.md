@@ -29,8 +29,8 @@
 
 ## [UPDATE] Kustomization Configuration
 
-Instead of using `.argocd-source-foobar.yaml`, we're going to manage images directly in `kustomization.yaml`.
-See [kustomization.yaml](../kubernetes/kustomization.yaml) for more details.    https://github.com/tbernacchi/traefik-labs/blob/main/kubernetes/kustomization.yaml
+Instead of using `.argocd-source-foobar.yaml`, we're going to manage images directly in `kustomization.yaml`.  
+See [kustomization.yaml](../../kubernetes/kustomization.yaml) for more details.
 
 ## Argo Image Updater Configuration
 
