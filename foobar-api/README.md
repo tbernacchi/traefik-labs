@@ -70,6 +70,21 @@ Only runs on `main` branch pushes:
 3. Builds Docker image with current version tag
 4. Pushes to: `docker.io/ambrosiaaaaa/foobar-api:${VERSION}`
 
+### Security Scanning Stage
+The pipeline includes comprehensive security scanning using Trivy:
+
+#### Container Image Scanning (main branch)
+- Scans the built Docker image for vulnerabilities
+- Runs after the image is pushed to Docker Hub
+- Uploads results to GitHub Security tab in SARIF format
+- Fails the build on HIGH and CRITICAL vulnerabilities
+
+#### Filesystem Scanning (pull requests)
+- Scans source code and dependencies for security issues
+- Runs on all pull requests targeting main branch
+- Helps catch vulnerabilities before they reach production
+- Also uploads results to GitHub Security tab
+
 ### Required Secrets
 - `DOCKERHUB_TOKEN`: For authentication with Docker Hub
 

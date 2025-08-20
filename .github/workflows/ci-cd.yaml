@@ -50,6 +50,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
+    outputs:
+      image-tag: ${{ steps.version.outputs.VERSION }}
+      image-name: ${{ env.REGISTRY }}/${{ env.REGISTRY_USER }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.VERSION }}
+
     steps:
       # Checkout code
       - name: Checkout repository
@@ -106,4 +110,79 @@ jobs:
           context: ./foobar-api
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_USER }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.VERSION }}
+
+  security-scan:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      # Checkout code for Trivy configuration
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Run Trivy security scan on the pushed Docker image
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ needs.build-and-push.outputs.image-name }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      # Upload Trivy scan results to GitHub Security tab
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      # Run Trivy scan with table format for PR comments and logs
+      - name: Run Trivy vulnerability scanner (table format)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ needs.build-and-push.outputs.image-name }}
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+  # Additional security scan job for pull requests (filesystem scan)
+  security-scan-pr:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Run Trivy filesystem scan for pull requests
+      - name: Run Trivy filesystem scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: './foobar-api'
+          format: 'sarif'
+          output: 'trivy-fs-results.sarif'
+
+      # Upload filesystem scan results to GitHub Security tab
+      - name: Upload Trivy filesystem scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-fs-results.sarif'
+
+      # Run filesystem scan with table format for logs
+      - name: Run Trivy filesystem scanner (table format)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: './foobar-api'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
 

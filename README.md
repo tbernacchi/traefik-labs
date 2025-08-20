@@ -49,6 +49,12 @@ The pipeline consists of:
    - Pushes to Docker Hub registry
    - Uses version from `foobar-api/.version` for tagging
 
+3. **Security Scanning Stage**:
+   - **Container Image Scan** (main branch only): Scans the pushed Docker image for vulnerabilities using Trivy
+   - **Filesystem Scan** (pull requests): Scans the source code and dependencies for security issues
+   - Uploads scan results to GitHub Security tab
+   - Fails the build on HIGH and CRITICAL vulnerabilities
+
 For detailed pipeline configuration, see [.github/workflows/ci-cd.yaml](./.github/workflows/ci-cd.yaml)
 
 ## References

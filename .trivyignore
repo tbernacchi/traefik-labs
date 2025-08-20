@@ -1,0 +1,10 @@
+# Trivy ignore file
+# This file contains vulnerabilities that should be ignored by Trivy security scans
+# Format: CVE-ID or vulnerability ID, one per line
+# 
+# Example:
+# CVE-2021-12345
+# GHSA-xxxx-xxxx-xxxx
+
+# Add any known false positives or accepted risks below:
+# (Currently empty - all vulnerabilities will be reported)
